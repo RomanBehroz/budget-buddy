@@ -1,0 +1,17 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 30px;
+    align-items: center;
+   
+}
+
+.box{
+    padding: 20px 30px;
+    border-radius: 10px;
+}
+
+.box-dark{
+    background-color: var(--dark-bg);
+    color: var(--third-color);
+}

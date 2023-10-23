@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary-color: #232C33;
+    --secondary-color: #B5B2C2;
+    --third-color: #A0C1D1;
+    --fourth-color: #DADFF7;
+    --dark-bg :#1E1E1E;
+}
+
+.heading1{
+    font-size: 48px;
+    color: var(--fourth-color);
+}
+
+.heading4{
+    font-size: 24px;
+    color: var(--fourth-color);
+}
+
+.para1{
+    font-size: 16px;
+    line-height: 0;
+}
+
+body{
+    background-color: var(--primary-color);
+}
