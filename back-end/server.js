@@ -1,13 +1,14 @@
-const e = require('express');
 const express = require('express');
+const cors = require('cors')
 const mongoose = require('mongoose');
 const Expense = require('./models/expenseModel');
 const Category = require('./models/categoryModel');
 const Budget = require('./models/budgetModel');
 const app = express();
 
-//middlware
+//middleware
 app.use(express.json())
+app.use(cors())
 
 //routes
 
@@ -119,6 +120,8 @@ app.get('/expense/:id', async(req, res) =>{
 app.post('/expense', async(req, res) => {
     try{
         const expense = await Expense.create(req.body);
+        const budget = await Budget.findById(expense.budget);
+        const updateBudget = await Budget.findByIdAndUpdate(budget._id, {spendAmount: budget.spendAmount + expense.amount});
         res.status(201).json(expense);
     }catch (error){
         res.status(500).json({message: error.message});
@@ -165,21 +168,20 @@ app.delete('/expense/:id', async(req, res) =>{
 app.get('/expense/budget/:id', async(req, res) =>{
     try{
         const {id} = req.params;
-        let expenses = await Expense.find({});
-        expenses = expenses.filter(expense => console.log(expense));
-        // expenses = expenses.map(expense => {
-        //     return {
-        //         _id: expense._id,
-        //         name: expense.name,
-        //         amount: expense.amount,
-        //         category: expense.category.name,
-        //         date: expense.date,
-        //         budget: expense.budget
-         
-        //     };
-        //   });
+        let expenses = await Expense.find({budget: id}).populate('category');
 
-   
+        expenses = expenses.map(expense => {
+            return {
+                _id: expense._id,
+                name: expense.name,
+                amount: expense.amount,
+                category: expense.category.name,
+                date: expense.date,
+                budget: expense.budget
+         
+            };
+          });
+
         res.status(200).json(expenses);
     }catch (error){
         console.log(error.message);

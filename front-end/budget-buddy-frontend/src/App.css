@@ -17,7 +17,15 @@
     font-size: 48px;
     color: var(--fourth-color);
 }
+.heading3{
+    font-size: 32px;
+}
 
+.heading3-5{
+    font-size: 20px;
+    color: var(--primary-color);
+    font-weight: 300;
+}
 .heading4{
     font-size: 24px;
     color: var(--fourth-color);

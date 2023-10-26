@@ -6,6 +6,11 @@ const budgetSchema = mongoose.Schema(
             type: Number,
             required: [true, "Please enter a budget amount"],
         },
+        spendAmount:{
+            type: Number,
+            required: [true, "Please enter a budget amount"],
+            default :0
+        },
         month:{
             type: Number,
             required: [true, "Please enter the month"]

@@ -1,0 +1,43 @@
+.main-content{
+width: 100%;
+    height: 60vh;
+}
+.money-stats-section{
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary-color);
+    padding: 40px 40px;
+    border-radius: 50px 50px 0 0;
+    height: 200px;
+    position: relative;
+    z-index: 1;
+}
+
+.money-stats-section .para1{
+    color: rgba(35, 44, 51, 0.70);
+    line-height: 0.5;
+}
+
+.heading3{
+    color: var(--primary-color);
+    font-weight: 300;
+}
+
+.vertical-line{
+    background-color: rgba(35, 44, 51, 0.20);
+    width: 1px;
+    height: 50px;
+}
+
+.expense-list-section{
+    width: 100%;
+    display: flex;
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 50px 50px 0 0;
+
+    position: relative;
+    z-index: 2;
+    transform: translateY(-90px);
+}
+

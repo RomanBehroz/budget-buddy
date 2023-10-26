@@ -1,0 +1,16 @@
+.euro{
+    display: flex;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+   
+
+}
+.euro .section-a img{
+    height: 150px;
+   
+}
+.para1{
+    color: var(--third-color);
+}

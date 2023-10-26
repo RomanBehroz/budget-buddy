@@ -1,15 +1,18 @@
 import './css/Header.css'
-
-import React from 'react'
+import { BudgetContext } from '../context'
+import React, { useContext } from 'react'
 
 const Header = () => {
+ 
+  const {budgetMonthAndYear} = useContext(BudgetContext);
+
   return (
     <div className='header'>
         <div>
             <div className='heading4'>Hello again!</div>
         </div>
         <div>
-            <div className='box box-dark para1'>OCT 2023</div>
+            <div className='box box-dark para1'>{budgetMonthAndYear}</div>
         </div>
     </div>
   )
