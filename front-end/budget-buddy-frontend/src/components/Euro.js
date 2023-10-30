@@ -14,7 +14,7 @@ const Euro = () => {
                 Balance
             </div>
             <div className='heading1'>
-                {budget?.amount - budget?.spendAmount}€
+                {(budget?.amount - budget?.spendAmount).toFixed(2)}€
             </div>
         </div>
     </div>

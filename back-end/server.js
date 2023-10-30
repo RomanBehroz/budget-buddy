@@ -90,7 +90,8 @@ app.get('/expense', async(req, res) =>{
                 amount: expense.amount,
                 category: expense.category.name,
                 date: expense.date,
-                budget: expense.budget
+                budget: expense.budget,
+                createdAt: expense.createdAt
          
             };
           });
@@ -168,7 +169,7 @@ app.delete('/expense/:id', async(req, res) =>{
 app.get('/expense/budget/:id', async(req, res) =>{
     try{
         const {id} = req.params;
-        let expenses = await Expense.find({budget: id}).populate('category');
+        let expenses = await Expense.find({budget: id}).populate('category').sort({ createdAt: -1 });
 
         expenses = expenses.map(expense => {
             return {
@@ -182,7 +183,32 @@ app.get('/expense/budget/:id', async(req, res) =>{
             };
           });
 
-        res.status(200).json(expenses);
+
+        let groupedData = expenses.reduce((acc, current) => {
+            // Get the value of the "category" property
+            const category = current.date;
+
+            // If the category doesn't exist in the accumulator object, create an empty array
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+
+            // Push the current object into the corresponding category array
+            acc[category].push(current);
+
+            return acc;
+        }, {});
+
+
+        const dataArray = Object.entries(groupedData);
+
+
+       let sorted = dataArray.sort((a, b) => parseInt(b[0]) - parseInt(a[0]));
+
+
+        const sortedData = Object.fromEntries(sorted);
+
+        res.status(200).json(sorted);
     }catch (error){
         console.log(error.message);
         res.status(500).json({message: error.message});

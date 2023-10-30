@@ -1,0 +1,28 @@
+.add-expense-button-section{
+    position: fixed;   /* Fixed positioning to stay at the bottom */
+    bottom: 20px;
+    left: 50%;         /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally precisely */
+    width: 80px;      /* Width of 100px */
+    height: 80px;     /* Height of 100px */
+
+    color: white;      /* Text color */
+    text-align: center; /* Center text horizontally */
+    line-height: 100px;
+    z-index: 5;
+}
+
+.add-expense-button{
+    background-color: var(--primary-color);
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 38px;
+    font-weight: 200;
+    cursor: pointer;
+}
+

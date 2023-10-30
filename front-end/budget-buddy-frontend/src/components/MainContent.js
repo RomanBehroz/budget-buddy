@@ -5,7 +5,7 @@ import ExpenseListGroup from './ExpenseListGroup';
 
 const MainContent = () => {
     const {budget} = useContext(BudgetContext);
-  return (
+    return (
     <div className='main-content'>
         <div className='money-stats-section'>
             <div>

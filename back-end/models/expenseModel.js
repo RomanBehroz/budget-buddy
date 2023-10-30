@@ -11,9 +11,8 @@ const expenseSchema = mongoose.Schema(
             required: [true, "Please the amount"]
         },
         date: {
-            type: Date,
-            required: [true, "Please pick a date"],
-            default: Date.now
+            type: Number,
+            required: [true, "Expense date missing"]
         },
         image: {
             type:Buffer,
