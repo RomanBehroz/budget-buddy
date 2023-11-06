@@ -12,12 +12,14 @@ import AddExpenseForm from "../components/AddExpenseForm";
 const Dashboard = () => {
   const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/653124e6a443d6942a9f0d8f";
+  const GET_CATEGORIES_URL = "http://localhost:3000/category";
 
   const [budget, setBudget] = useState();
   const [expenses, setExpenses] = useState();
   const [budgetMonthAndYear, setBudgetMonthAndYear] = useState();
   const [budgetMonth, setBudgetMonth] = useState();
   const [addExpenseState, setAddExpenseState] = useState(false)
+  const [categories, setCategories] = useState([])
 
   const toggleAddExpenseState = () =>{
     setAddExpenseState(!addExpenseState);
@@ -27,6 +29,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchBudget();
     fetchExpenses();
+    fetchExpenseCategories()
   }, []);
 
   const numberInMonth = (number) =>{
@@ -43,6 +46,16 @@ const Dashboard = () => {
 
   }
 
+  const fetchExpenseCategories = async () =>{
+    try {
+      const response = await axios.get(GET_CATEGORIES_URL);
+      if (response.status === 200) {
+        setCategories(response.data)
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
   const fetchBudget = async () => {
     try {
       const response = await axios.get(GET_BUDGET_URL);
@@ -75,7 +88,7 @@ const Dashboard = () => {
 
 
   return (
-    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState}}>
+    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState, fetchExpenses, categories}}>
       <div>
         <div  onClick={dashboardClicked}>
           <Header />

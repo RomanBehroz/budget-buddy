@@ -26,33 +26,38 @@
 }
 .add-expense-form{
     display: grid;
-    grid-template-columns: 65% 35%;
+    grid-template-columns: 60% 40%;
     grid-template-rows: 50% 50%;
     gap: 10px; /* Adjust the gap as needed */
     padding: 15px 30px;
 }
 
-.add-expense-form input{
+.add-expense-form input, select{
     width: 100%;
     height: 60px;
     background-color: transparent;
     outline: none;
     border: none;
     color: #E5F3FE;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
+
 }
 
 .add-expense-form-save-button{
     background-color: var(--third-color);
     border-radius: 50px 50px 0px 0px;
-    height: 60px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     cursor: pointer;
 }
+
+.right{
+
+ }
 
 
 

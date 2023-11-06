@@ -7,8 +7,6 @@ const ExpenseListGroup = () => {
     const {budgetMonth} = useContext(BudgetContext);
 
 
-
-
     // const groupedData = expenses?.reduce((grouped, item) => {
     //
     //     const { date } = item;
@@ -22,7 +20,7 @@ const ExpenseListGroup = () => {
     //     return grouped;
     //   }, {});
 
-    console.log(expenses)
+
   return (
    <div className='expense-list-group'>
        
