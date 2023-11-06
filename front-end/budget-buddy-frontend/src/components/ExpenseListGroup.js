@@ -57,7 +57,7 @@ const ExpenseListGroup = () => {
                <div className='box2'><div className='heading3-5'>{date} { budgetMonth}</div></div>
 
                    {items.map(item => (
-                          <ExpenseListItem key={item._id} name={item.name} category={item.category} amount={item.amount}/>
+                          <ExpenseListItem key={item._id} id={item._id} name={item.name} category={item.category} amount={item.amount}/>
 
                    ))}
 

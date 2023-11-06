@@ -1,13 +1,13 @@
 import './css/AddExpenseForm.css'
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {BudgetContext} from "../context";
 import axios from "axios";
 
 
 const AddExpenseForm = () => {
-    const {toggleAddExpenseState, budget, fetchExpenses, categories} = useContext(BudgetContext);
+    const {toggleAddExpenseState, budget, fetchExpenses, categories, editExpense} = useContext(BudgetContext);
     const [validationState, setValidationState] = useState(false)
-
+    const [expenseId, setExpenseId] = useState('')
     const [expenseName, setExpenseName] = useState('')
     const [expenseAmount, setExpenseAmount] = useState('')
     const [expenseCategory, setExpenseCategory] = useState('6548e02d8c2be41abf18e1e1')
@@ -18,23 +18,33 @@ const AddExpenseForm = () => {
         setExpenseCategory(event.target.value);
     };
 
+    useEffect(() => {
+            if(editExpense !== ''){
+                setExpenseId(editExpense._id)
+                setExpenseName(editExpense.name)
+                setExpenseAmount(editExpense.amount)
+                setExpenseCategory(editExpense.category)
+                setExpenseDate(editExpense.date)
+            }
+    }, [editExpense]);
 
-    console.log(expenseCategory)
 
     const saveExpense = async () => {
 
         try{
-        const newExpense = {
-            name: expenseName,
-            amount: expenseAmount,
-            date: expenseDate,
-            category: expenseCategory,
-            budget: budget._id
-        }
+            let expenseData = {
+                name: expenseName,
+                amount: expenseAmount,
+                date: expenseDate,
+                category: expenseCategory,
+                budget: budget._id
+            }
+            if(editExpense !==''){
+                const response = await axios.put('http://localhost:3000/expense/'+expenseId, expenseData);
+            }else{
+                const response = await axios.post('http://localhost:3000/expense', expenseData);
+            }
 
-        const response = await axios.post('http://localhost:3000/expense', newExpense);
-
-        console.log(response.data)
             fetchExpenses()
             toggleAddExpenseState()
         } catch (error) {

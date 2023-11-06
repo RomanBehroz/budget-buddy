@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [budgetMonth, setBudgetMonth] = useState();
   const [addExpenseState, setAddExpenseState] = useState(false)
   const [categories, setCategories] = useState([])
-
+  const [editExpense, setEditExpense] = useState('')
   const toggleAddExpenseState = () =>{
     setAddExpenseState(!addExpenseState);
 
@@ -88,7 +88,7 @@ const Dashboard = () => {
 
 
   return (
-    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState, fetchExpenses, categories}}>
+    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState, fetchExpenses, categories, editExpense, setEditExpense}}>
       <div>
         <div  onClick={dashboardClicked}>
           <Header />

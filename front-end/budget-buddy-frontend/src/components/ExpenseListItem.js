@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import './css/ExpenseListItem.css'
-const ExpenseListItem = ({name, amount, category}) => {
-
+import {BudgetContext} from "../context";
+import axios from "axios";
+import AddExpenseForm from "./AddExpenseForm";
+const ExpenseListItem = ({id, name, amount, category}) => {
+  const {toggleAddExpenseState, budget, fetchExpenses, categories, setEditExpense} = useContext(BudgetContext);
   const getColorForCategory = (category) =>{
     if(category === "Grocery")
     {
@@ -22,14 +25,34 @@ const ExpenseListItem = ({name, amount, category}) => {
 
   }
 
+  const getExpenseById = async (id) =>{
+    try{
+      const response = await axios.get('http://localhost:3000/expense/' + id);
+      setEditExpense(response.data);
+
+    }catch (error){
+      console.log(error)
+    }
+  }
+
+  const viewExpenseItem = (id) =>{
+    toggleAddExpenseState()
+    getExpenseById(id)
+
+  }
+
   return (
-    <div className='expense-list-item'>
+      <>
+
+    <div onClick={() => viewExpenseItem(id)} className='expense-list-item'>
         <div className='expense-item-icon-name'>
           <div className={getColorForCategory(category)}></div>
           <div className='heading3-5'>{name}</div>
         </div>
         <div className='heading3-5'>{amount}€</div>
     </div>
+
+      </>
   )
 }
 
