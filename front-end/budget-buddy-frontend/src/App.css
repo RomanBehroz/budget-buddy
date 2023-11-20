@@ -47,3 +47,22 @@ body{
 
     background-color: #E5F3FE;
 }
+
+.button{
+    padding: 10px 20px; /* Adjust as needed */
+    border: none;
+    border-radius: 15px; /* Rounded corners */
+    cursor: pointer; /* Cursor style on hover */
+    transition: background-color 0.3s ease;
+    background-color: var(--third-color);
+}
+
+.add-photo{
+    padding: 0 20px;
+    margin-bottom: 20px;
+
+}
+
+.red{
+    background-color: #ff6666;
+}

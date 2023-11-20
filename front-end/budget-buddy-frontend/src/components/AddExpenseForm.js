@@ -1,4 +1,5 @@
 import './css/AddExpenseForm.css'
+import '../App.css'
 import {useContext, useEffect, useState} from "react";
 import {BudgetContext} from "../context";
 import axios from "axios";
@@ -12,6 +13,10 @@ const AddExpenseForm = () => {
     const [expenseAmount, setExpenseAmount] = useState('')
     const [expenseCategory, setExpenseCategory] = useState('6548e02d8c2be41abf18e1e1')
     const [expenseDate, setExpenseDate] = useState('')
+    const [editMode, setEditMode] = useState(false)
+    const [showMedia, setShowMedia] = useState(false)
+    const [turnIcon, setTurnIcon] = useState('')
+    const [deleteWindow, setDeleteWindow] = useState(false)
 
 
     const handleChange = (event) => {
@@ -25,6 +30,7 @@ const AddExpenseForm = () => {
                 setExpenseAmount(editExpense.amount)
                 setExpenseCategory(editExpense.category)
                 setExpenseDate(editExpense.date)
+                setEditMode(true)
             }
     }, [editExpense]);
 
@@ -52,6 +58,26 @@ const AddExpenseForm = () => {
         }
 
     }
+
+    const toggleMedia = () =>{
+
+        setShowMedia(!showMedia)
+
+    }
+
+    const deleteExpense = async (expenseId) =>{
+
+
+        const response = await axios.delete('http://localhost:3000/expense/'+expenseId);
+        if(response.status === 200){
+            fetchExpenses()
+            setDeleteWindow(false)
+            setEditMode(false)
+            toggleAddExpenseState()
+        }
+
+    }
+
     return (
         <div className='add-expense-form-section'>
             {validationState? <>   <div className='validation'>
@@ -64,8 +90,17 @@ const AddExpenseForm = () => {
                     <div className='form-field'>
                         <input value={expenseName} onChange={(e) => setExpenseName(e.target.value)} type='text' name='expense-name-input' placeholder='Add an expense name'/>
                     </div>
-                    <div className='form-field'>
+                    <div className='form-field-amount'>
                         <input value={expenseAmount} onChange={(e) => setExpenseAmount(e.target.value)}  type='text' name='expense-amount-input' placeholder='Add an expense amount'/>
+
+                    </div>
+
+                    <div onClick={toggleMedia} className={`form-field media `}>
+                        <div>Media</div>
+                        <div>
+                            <img className={showMedia? 'turn-icon' : ''} src='/images/direction.png'/>
+                        </div>
+
                     </div>
 
                 </div>
@@ -82,11 +117,50 @@ const AddExpenseForm = () => {
                     <div className='form-field'>
                         <input value={expenseDate} onChange={(e) => setExpenseDate(e.target.value)}  type='text' name='expense-date-input' placeholder='Select date'/>
                     </div>
+                    {
+                        editMode? <>
+                            <div className='form-field align-end delete-btn'>
+                                <img onClick={() => setDeleteWindow(true)} src='/images/delete.png'/>
+                            </div>
+                        </> : <></>
+                    }
+
                 </div>
             </div>
+            {
+                showMedia? <>
+
+                    <div className='expense-item-media-section'>
+                        <img src='/images/images.jpeg'/>
+
+                    </div>
+                    <div className='add-photo'>
+                        <button className='button'>
+                            Add photo
+                        </button>
+
+                    </div>
+                </> : <>
+                </>
+            }
+
+
             <div onClick={saveExpense} className='add-expense-form-save-button'>
                 SAVE
             </div>
+
+
+            {
+                deleteWindow? <>
+                    <div className='delete-window'>
+                        <p>Are you sure, you want to delete this expense?</p>
+                        <div className='buttons'>
+                            <button onClick={() => deleteExpense(expenseId)} className='button red'>Yes</button>
+                            <button onClick={() => setDeleteWindow(false)} className='button'>No</button>
+                        </div>
+                    </div>
+                </> : <></>
+            }
         </div>
     )
 }
