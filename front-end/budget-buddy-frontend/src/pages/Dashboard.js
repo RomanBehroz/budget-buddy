@@ -88,7 +88,7 @@ const Dashboard = () => {
 
 
   return (
-    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState, fetchExpenses, categories, editExpense, setEditExpense}}>
+    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState, fetchExpenses, fetchBudget, categories, editExpense, setEditExpense}}>
       <div>
         <div  onClick={dashboardClicked}>
           <Header />

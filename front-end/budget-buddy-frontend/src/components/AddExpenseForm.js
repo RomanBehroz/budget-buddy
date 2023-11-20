@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 const AddExpenseForm = () => {
-    const {toggleAddExpenseState, budget, fetchExpenses, categories, editExpense} = useContext(BudgetContext);
+    const {toggleAddExpenseState, budget, fetchExpenses, categories, editExpense, fetchBudget} = useContext(BudgetContext);
     const [validationState, setValidationState] = useState(false)
     const [expenseId, setExpenseId] = useState('')
     const [expenseName, setExpenseName] = useState('')
@@ -50,7 +50,7 @@ const AddExpenseForm = () => {
             }else{
                 const response = await axios.post('http://localhost:3000/expense', expenseData);
             }
-
+            fetchBudget()
             fetchExpenses()
             toggleAddExpenseState()
         } catch (error) {
@@ -74,6 +74,7 @@ const AddExpenseForm = () => {
             setDeleteWindow(false)
             setEditMode(false)
             toggleAddExpenseState()
+            fetchBudget()
         }
 
     }

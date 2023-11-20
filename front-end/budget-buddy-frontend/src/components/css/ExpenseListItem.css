@@ -3,6 +3,7 @@
     width: 100%;
     justify-content: space-between;
     margin: 30px 0px;
+    cursor: pointer;
 }
 
 .expense-item-icon-name{
