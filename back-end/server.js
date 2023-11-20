@@ -51,6 +51,40 @@ app.get('/budget/:id', async(req, res) =>{
     }
 })
 
+//update budget
+
+app.put('/budget/:id', async(req, res) => {
+    try{
+        const {id} = req.params;
+        const budget = await Budget.findByIdAndUpdate(id, req.body);
+        if(!budget){
+            return res.status(404).json({message: 'cannot find any budget with id ${id}'})
+        }else{
+            const budget = await Budget.findById(id);
+            res.status(201).json(budget);
+        }
+
+    }catch (error){
+
+        res.status(500).json({message: error.message});
+    }
+})
+
+async function updateBudget(budgetId, data) {
+    try {
+        const budget = await Budget.findByIdAndUpdate(budgetId, data);
+        if (!budget) {
+            return true;
+        } else {
+            const budget = await Budget.findById(budgetId);
+            return false;
+        }
+
+    } catch (error) {
+        return false;
+    }
+}
+
 
 ////////////////////////////////////
 ///////////////CATEGORY/////////////
@@ -151,10 +185,17 @@ app.put('/expense/:id', async(req, res) => {
 app.delete('/expense/:id', async(req, res) =>{
     try{
         const {id} = req.params;
-        const expense = await Expense.findByIdAndDelete(id);
+
+        const expense = await Expense.findById(id).populate('budget');
+        // res.status(200).json({expense: expense});
         if(!expense){
             return res.status(404).json({message: 'cannot find any expense with id ${id}'})
         }else{
+            const updateBudgetSpend = {
+                spendAmount: expense.budget.spendAmount - expense.amount
+            }
+            await Expense.findByIdAndDelete(id);
+            await updateBudget(expense.budget._id, updateBudgetSpend)
             res.status(200).json({message: "Expense with id ${id} deleted."});
         }
         
