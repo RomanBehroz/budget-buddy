@@ -17,6 +17,15 @@ const AddExpenseForm = () => {
     const [showMedia, setShowMedia] = useState(false)
     const [turnIcon, setTurnIcon] = useState('')
     const [deleteWindow, setDeleteWindow] = useState(false)
+    const [imageSrc, setImageSrc] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (e) => {
+        // Get the selected file from the input
+        const file = e.target.files[0];
+        setSelectedFile(file);
+    };
+
 
 
     const handleChange = (event) => {
@@ -30,25 +39,55 @@ const AddExpenseForm = () => {
                 setExpenseAmount(editExpense.amount)
                 setExpenseCategory(editExpense.category)
                 setExpenseDate(editExpense.date)
+                setImageSrc(editExpense.image)
                 setEditMode(true)
+
             }
     }, [editExpense]);
+
+    const createImageURL = (imageBuffer) => {
+        const blob = new Blob([imageBuffer], { type: 'image/jpeg' }); // Adjust the type if your image is different
+        const imageUrl = URL.createObjectURL(blob);
+        setImageSrc(imageUrl);
+    };
+
+
 
 
     const saveExpense = async () => {
 
         try{
-            let expenseData = {
-                name: expenseName,
-                amount: expenseAmount,
-                date: expenseDate,
-                category: expenseCategory,
-                budget: budget._id
-            }
-            if(editExpense !==''){
-                const response = await axios.put('http://localhost:3000/expense/'+expenseId, expenseData);
+            let expenseData;
+            if(selectedFile){
+                 expenseData = {
+                    name: expenseName,
+                    amount: expenseAmount,
+                    date: expenseDate,
+                    category: expenseCategory,
+                    budget: budget._id,
+                    image: selectedFile
+                }
             }else{
-                const response = await axios.post('http://localhost:3000/expense', expenseData);
+                 expenseData = {
+                    name: expenseName,
+                    amount: expenseAmount,
+                    date: expenseDate,
+                    category: expenseCategory,
+                    budget: budget._id,
+                    image: imageSrc
+                }
+            }
+
+            if(editExpense !==''){
+                const response = await axios.put('http://localhost:3000/expense/'+expenseId, expenseData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }else{
+                const response = await axios.post('http://localhost:3000/expense', expenseData, { headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }});
             }
             fetchBudget()
             fetchExpenses()
@@ -78,6 +117,9 @@ const AddExpenseForm = () => {
         }
 
     }
+
+
+
 
     return (
         <div className='add-expense-form-section'>
@@ -132,13 +174,13 @@ const AddExpenseForm = () => {
                 showMedia? <>
 
                     <div className='expense-item-media-section'>
-                        <img src='/images/images.jpeg'/>
+
+                        {imageSrc? <><img src={'http://localhost:3000/'+imageSrc}/></> : <></>}
 
                     </div>
                     <div className='add-photo'>
-                        <button className='button'>
-                            Add photo
-                        </button>
+                        <input className='button'  type="file" name='image' onChange={handleFileChange} />
+
 
                     </div>
                 </> : <>

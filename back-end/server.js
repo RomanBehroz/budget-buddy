@@ -5,7 +5,8 @@ const Expense = require('./models/expenseModel');
 const Category = require('./models/categoryModel');
 const Budget = require('./models/budgetModel');
 const app = express();
-
+const multer = require('multer');
+const path = require('path')
 //middleware
 app.use(express.json())
 app.use(cors())
@@ -151,20 +152,60 @@ app.get('/expense/:id', async(req, res) =>{
     }
 })
 
-//save new expense
-app.post('/expense', async(req, res) => {
-    try{
-        const expense = await Expense.create(req.body);
-        const budget = await Budget.findById(expense.budget);
-        const updateBudget = await Budget.findByIdAndUpdate(budget._id, {spendAmount: budget.spendAmount + expense.amount});
-        res.status(201).json(expense);
-    }catch (error){
-        res.status(500).json({message: error.message});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'Images')
+    },
+    filename: (req, file, cb) =>{
+        cb(null, Date.now() + path.extname(file.originalname))
     }
 })
 
+const upload = multer({storage: storage})
+
+//save new expense
+app.post('/expense', upload.single('image'), async (req, res) => {
+    try {
+        let imagePath;
+
+        if(req.file == null || req.file == undefined){
+            imagePath = ''
+        }else{
+            imagePath = req.file.path
+        }
+
+        const { name, amount, date, budget, category } = req.body;
+        const newExpense = new Expense({
+            name,
+            amount,
+            budget,
+            category,
+            date,
+            image: imagePath
+        });
+
+        await newExpense.save();
+
+        res.status(201).json({ message: 'Expense added successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+app.get('/Images/:imageName', (req, res) => {
+    const imageName = req.params.imageName;
+
+    // Get the absolute path to the image
+    const imagePath = path.join(__dirname, 'Images', imageName);
+
+    // Send the image as a response
+    res.sendFile(imagePath);
+});
+
 //update expense
-app.put('/expense/:id', async(req, res) => {
+app.put('/expense/:id', upload.single('image'),async(req, res) => {
     try{
         const {id} = req.params;
         const expense = await Expense.findByIdAndUpdate(id, req.body);

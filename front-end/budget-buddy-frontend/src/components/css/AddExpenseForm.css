@@ -103,6 +103,8 @@
     width: 100%;
     padding-bottom: 15px;
     transition: transform 0.5s ease-in-out;
+
+
 }
 
 
@@ -137,7 +139,9 @@
     gap: 20px;
 }
 
-
+.expense-item-media-section img{
+    height: 300px;
+}
 
 
 

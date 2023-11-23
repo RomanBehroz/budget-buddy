@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const expenseSchema = mongoose.Schema(
     {
-        name: {
+        name:{
             type: String,
-            required: [true, "Please enter an expense name"]
+            required: true
         },
         amount:{
             type: Number,
@@ -14,10 +14,7 @@ const expenseSchema = mongoose.Schema(
             type: Number,
             required: [true, "Expense date missing"]
         },
-        image: {
-            type:Buffer,
-            required: false
-        },
+        image: String,
         category: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Category',
