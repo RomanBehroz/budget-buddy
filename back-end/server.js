@@ -207,8 +207,21 @@ app.get('/Images/:imageName', (req, res) => {
 //update expense
 app.put('/expense/:id', upload.single('image'),async(req, res) => {
     try{
+
+        let imagePath;
+
+
+
         const {id} = req.params;
         const expense = await Expense.findByIdAndUpdate(id, req.body);
+
+
+        if(req.file){
+            imagePath = req.file.path
+            expense.image = imagePath;
+            expense.save();
+        }
+
         if(!expense){
             return res.status(404).json({message: 'cannot find any expense with id ${id}'})
         }else{
