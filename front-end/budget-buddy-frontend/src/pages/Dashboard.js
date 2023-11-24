@@ -13,6 +13,7 @@ const Dashboard = () => {
   const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/653124e6a443d6942a9f0d8f";
   const GET_CATEGORIES_URL = "http://localhost:3000/category";
+  const GET_BUDGET_TOTAL_SPEND = "http://localhost:3000/expense/sum/653124e6a443d6942a9f0d8f"
 
   const [budget, setBudget] = useState();
   const [expenses, setExpenses] = useState();
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const [addExpenseState, setAddExpenseState] = useState(false)
   const [categories, setCategories] = useState([])
   const [editExpense, setEditExpense] = useState('')
+  const [budgetTotalSpend, setBudgetTotalSpend] = useState(0)
   const toggleAddExpenseState = () =>{
     setAddExpenseState(!addExpenseState);
 
@@ -30,6 +32,8 @@ const Dashboard = () => {
     fetchBudget();
     fetchExpenses();
     fetchExpenseCategories()
+    fetchBudgetTotalSpendSum()
+
   }, []);
 
   const numberInMonth = (number) =>{
@@ -51,6 +55,17 @@ const Dashboard = () => {
       const response = await axios.get(GET_CATEGORIES_URL);
       if (response.status === 200) {
         setCategories(response.data)
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const fetchBudgetTotalSpendSum = async () =>{
+    try {
+      const response = await axios.get(GET_BUDGET_TOTAL_SPEND);
+      if (response.status === 200) {
+        setBudgetTotalSpend(response.data)
       }
     } catch (error) {
       console.error('Error:', error);
@@ -88,7 +103,8 @@ const Dashboard = () => {
 
 
   return (
-    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, toggleAddExpenseState, fetchExpenses, fetchBudget, categories, editExpense, setEditExpense}}>
+    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, budgetTotalSpend,
+      toggleAddExpenseState, fetchExpenses, fetchBudget, categories, editExpense, setEditExpense, fetchBudgetTotalSpendSum}}>
       <div>
         <div  onClick={dashboardClicked}>
           <Header />

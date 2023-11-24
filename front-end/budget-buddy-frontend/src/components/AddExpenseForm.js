@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 const AddExpenseForm = () => {
-    const {toggleAddExpenseState, budget, fetchExpenses, categories, editExpense, fetchBudget} = useContext(BudgetContext);
+    const {toggleAddExpenseState, budget, fetchExpenses, categories, editExpense, fetchBudget, fetchBudgetTotalSpendSum} = useContext(BudgetContext);
     const [validationState, setValidationState] = useState(false)
     const [expenseId, setExpenseId] = useState('')
     const [expenseName, setExpenseName] = useState('')
@@ -44,14 +44,6 @@ const AddExpenseForm = () => {
 
             }
     }, [editExpense]);
-
-    const createImageURL = (imageBuffer) => {
-        const blob = new Blob([imageBuffer], { type: 'image/jpeg' }); // Adjust the type if your image is different
-        const imageUrl = URL.createObjectURL(blob);
-        setImageSrc(imageUrl);
-    };
-
-
 
 
     const saveExpense = async () => {
@@ -92,6 +84,7 @@ const AddExpenseForm = () => {
             fetchBudget()
             fetchExpenses()
             toggleAddExpenseState()
+            fetchBudgetTotalSpendSum()
         } catch (error) {
             console.error('Post Request Error: ', error)
         }
@@ -114,6 +107,7 @@ const AddExpenseForm = () => {
             setEditMode(false)
             toggleAddExpenseState()
             fetchBudget()
+            fetchBudgetTotalSpendSum()
         }
 
     }

@@ -7,6 +7,7 @@ const Budget = require('./models/budgetModel');
 const app = express();
 const multer = require('multer');
 const path = require('path')
+const {get} = require("mongoose");
 //middleware
 app.use(express.json())
 app.use(cors())
@@ -105,6 +106,7 @@ app.get('/category', async(req, res) =>{
 app.post('/category', async(req, res) => {
     try{
         const category = await Category.create(req.body);
+
         res.status(201).json(category);
     }catch (error){
         res.status(500).json({message: error.message});
@@ -114,6 +116,22 @@ app.post('/category', async(req, res) => {
 ////////////////////////////////////
 ////////////////EXPENSE////////////
 //////////////////////////////////
+
+//count expenses in sum in a budget
+app.get('/expense/sum/:budgetId', async (req, res) => {
+    try{
+        const {budgetId} = req.params;
+        const expenses = await Expense.find({ budget: budgetId });
+
+        const totalValue = expenses.reduce((accumulator, currentItem) => {
+            return accumulator + currentItem.amount;
+        }, 0);
+        res.status(200).json(totalValue);
+    }catch (error){
+
+    }
+})
+
 //get all expenses
 app.get('/expense', async(req, res) =>{
     try{
@@ -186,6 +204,12 @@ app.post('/expense', upload.single('image'), async (req, res) => {
         });
 
         await newExpense.save();
+
+        let getBudget = await Budget.findById(budget)
+
+        getBudget.spendAmount = getBudget.spendAmount + Number(amount);
+
+        await Budget.findByIdAndUpdate(budget, getBudget)
 
         res.status(201).json({ message: 'Expense added successfully' });
     } catch (err) {

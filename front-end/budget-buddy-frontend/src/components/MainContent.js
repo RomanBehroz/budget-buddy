@@ -4,7 +4,7 @@ import { BudgetContext } from '../context';
 import ExpenseListGroup from './ExpenseListGroup';
 
 const MainContent = () => {
-    const {budget} = useContext(BudgetContext);
+    const {budget, budgetTotalSpend} = useContext(BudgetContext);
     return (
     <div className='main-content'>
         <div className='money-stats-section'>
@@ -15,7 +15,7 @@ const MainContent = () => {
             <div className='vertical-line'></div>
             <div>
                 <div className='para1'>Expense</div>
-                <div className='heading3'>{budget?.spendAmount}€</div>
+                <div className='heading3'>{budgetTotalSpend}€</div>
             </div>
         </div>
 
