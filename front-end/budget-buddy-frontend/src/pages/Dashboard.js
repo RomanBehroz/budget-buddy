@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import './css/Dashboard.css'
 import Header from '../components/Header'
 import Euro from '../components/Euro'
@@ -10,10 +10,10 @@ import MainContent from '../components/MainContent'
 import AddExpenseButton from "../components/AddExpenseButton";
 import AddExpenseForm from "../components/AddExpenseForm";
 const Dashboard = () => {
-  const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
-  const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/653124e6a443d6942a9f0d8f";
+  const GET_BUDGET_URL = "http://localhost:3000/budget/";
+  const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/";
   const GET_CATEGORIES_URL = "http://localhost:3000/category";
-  const GET_BUDGET_TOTAL_SPEND = "http://localhost:3000/expense/sum/653124e6a443d6942a9f0d8f"
+  const GET_BUDGET_TOTAL_SPEND = "http://localhost:3000/expense/sum/"
 
   const [budget, setBudget] = useState();
   const [expenses, setExpenses] = useState();
@@ -23,6 +23,8 @@ const Dashboard = () => {
   const [categories, setCategories] = useState([])
   const [editExpense, setEditExpense] = useState('')
   const [budgetTotalSpend, setBudgetTotalSpend] = useState(0)
+
+  const {budgetId, setBudgetId} = useContext(BudgetContext);
   const toggleAddExpenseState = () =>{
     setAddExpenseState(!addExpenseState);
 
@@ -63,7 +65,7 @@ const Dashboard = () => {
 
   const fetchBudgetTotalSpendSum = async () =>{
     try {
-      const response = await axios.get(GET_BUDGET_TOTAL_SPEND);
+      const response = await axios.get(GET_BUDGET_TOTAL_SPEND+budgetId);
       if (response.status === 200) {
         setBudgetTotalSpend(response.data)
       }
@@ -73,7 +75,7 @@ const Dashboard = () => {
   }
   const fetchBudget = async () => {
     try {
-      const response = await axios.get(GET_BUDGET_URL);
+      const response = await axios.get(GET_BUDGET_URL+budgetId);
       if (response.status === 200) {
         setBudget(response.data)
         setBudgetMonthAndYear(numberInMonth(response.data.month) + " " + response.data.year)
@@ -86,7 +88,7 @@ const Dashboard = () => {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get(GET_EXPENSES_URL);
+      const response = await axios.get(GET_EXPENSES_URL+budgetId);
       if (response.status === 200) {
         setExpenses(response.data)
       }

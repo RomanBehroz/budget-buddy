@@ -4,6 +4,9 @@ import { BudgetContext } from '../context';
 
 const Euro = () => {
     const {budget, budgetTotalSpend} = useContext(BudgetContext);
+    {
+
+    }
   return (
     <div className='euro'>
         <div className='section-a'>
@@ -14,7 +17,7 @@ const Euro = () => {
                 Balance
             </div>
             <div className='heading1'>
-                {(budget?.amount - budgetTotalSpend).toFixed(2)}€
+                {(budget?.amount - budgetTotalSpend).toFixed(2).replace('.', ',')}€
             </div>
         </div>
     </div>
