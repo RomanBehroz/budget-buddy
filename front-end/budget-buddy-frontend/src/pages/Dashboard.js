@@ -46,6 +46,8 @@ const Dashboard = () => {
       case 11:
         return "NOV"
         break;
+      case 12:
+        return "DEC"
       default:
         return ""
     }    

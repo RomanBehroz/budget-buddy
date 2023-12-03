@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from "axios";
 import {BudgetContext} from "../context";
+import Header from "../components/Header";
 
 const Setbudget = () => {
     const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
@@ -47,7 +48,7 @@ const Setbudget = () => {
                     month: currentMonth,
                     year: currentYear
                 }
-                console.log(budget)
+
                 const response = await axios.post(CREATE_BUDGET_URL, budget);
                 if (response.status === 201) {
                     setBudgetId(response.data._id)
@@ -62,6 +63,7 @@ const Setbudget = () => {
 
     return (
         <>
+            <Header/>
             <div className='setbudget-page'>
                 <div className='setbudget-content'>
                     <div className='setbudget-text'>

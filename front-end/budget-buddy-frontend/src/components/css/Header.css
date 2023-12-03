@@ -15,3 +15,17 @@
     background-color: var(--dark-bg);
     color: var(--third-color);
 }
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}
+.logo img{
+    height: 50px;
+}
+
+.logo .heading4{
+    font-size: 18px;
+}

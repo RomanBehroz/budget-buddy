@@ -1,10 +1,11 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import './css/ExpenseListItem.css'
 import {BudgetContext} from "../context";
 import axios from "axios";
 import AddExpenseForm from "./AddExpenseForm";
 const ExpenseListItem = ({id, name, amount, category}) => {
   const {toggleAddExpenseState, budget, fetchExpenses, categories, setEditExpense} = useContext(BudgetContext);
+  const [lkeCount, setLikeCount] = useState(0)
   const getColorForCategory = (category) =>{
     if(category === "Grocery")
     {
@@ -50,6 +51,7 @@ const ExpenseListItem = ({id, name, amount, category}) => {
           <div className='heading3-5'>{name}</div>
         </div>
         <div className='heading3-5'>{amount}€</div>
+
     </div>
 
       </>

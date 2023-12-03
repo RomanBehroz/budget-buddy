@@ -150,5 +150,11 @@
 
 
 
+.expense-item-media-section p{
+    color: var(--third-color);
+}
 
-
+.add-photo{
+    display: flex;
+    justify-content: space-between;
+}

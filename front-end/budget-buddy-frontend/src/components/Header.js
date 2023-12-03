@@ -8,11 +8,15 @@ const Header = () => {
 
   return (
     <div className='header'>
-        <div>
-            <div className='heading4'>Hello again!</div>
+        <div className='logo'>
+            <img src="/budget-planning.png"/>
+            <div className='heading4'>budget buddy</div>
         </div>
         <div>
-            <div className='box box-dark para1'>{budgetMonthAndYear}</div>
+            {
+                budgetMonthAndYear? <>   <div className='box box-dark para1'>{budgetMonthAndYear}</div></> : <></>
+            }
+
         </div>
     </div>
   )

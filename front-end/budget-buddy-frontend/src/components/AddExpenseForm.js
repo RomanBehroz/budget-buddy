@@ -19,6 +19,8 @@ const AddExpenseForm = () => {
     const [deleteWindow, setDeleteWindow] = useState(false)
     const [imageSrc, setImageSrc] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
+    const [likeCounter, setLikeCounter] = useState(0)
+
 
     const handleFileChange = (e) => {
         // Get the selected file from the input
@@ -81,6 +83,7 @@ const AddExpenseForm = () => {
                         'Content-Type': 'multipart/form-data'
                     }});
             }
+
             fetchBudget()
             fetchExpenses()
             toggleAddExpenseState()
@@ -158,6 +161,7 @@ const AddExpenseForm = () => {
                         editMode? <>
                             <div className='form-field align-end delete-btn'>
                                 <img onClick={() => setDeleteWindow(true)} src='/images/delete.png'/>
+
                             </div>
                         </> : <></>
                     }
@@ -169,12 +173,12 @@ const AddExpenseForm = () => {
 
                     <div className='expense-item-media-section'>
 
-                        {imageSrc? <><img src={'http://localhost:3000/'+imageSrc}/></> : <></>}
+                        {imageSrc? <><img src={'http://localhost:3000/'+imageSrc}/></> : <><p>No image to display</p></>}
 
                     </div>
                     <div className='add-photo'>
                         <input className='button'  type="file" name='image' onChange={handleFileChange} />
-
+                        <button onClick={() => setLikeCounter(likeCounter + 1)} className='button'>Like {likeCounter}</button>
 
                     </div>
                 </> : <>
