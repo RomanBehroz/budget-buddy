@@ -5,14 +5,14 @@ import axios from 'axios';
 // @ts-ignore
 import { Expense } from '../types'; // Import Expense type if available
 
-interface ExpenseListItemProps {
-  id: string;
+export interface ExpenseListItemProps {
+  _id: string;
   name: string;
   amount: number;
   category: string;
 }
 
-const ExpenseListItem: React.FC<ExpenseListItemProps> = ({ id, name, amount, category }) => {
+const ExpenseListItem: React.FC<ExpenseListItemProps> = ({ _id, name, amount, category }) => {
   const { toggleAddExpenseState, fetchExpenses, setEditExpense } = useContext(BudgetContext);
   const [likeCount, setLikeCount] = useState<number>(0); // Adjust the type according to your needs
 
@@ -47,7 +47,7 @@ const ExpenseListItem: React.FC<ExpenseListItemProps> = ({ id, name, amount, cat
   };
 
   return (
-      <div onClick={() => viewExpenseItem(id)} className="expense-list-item">
+      <div onClick={() => viewExpenseItem(_id)} className="expense-list-item">
         <div className="expense-item-icon-name">
           <div className={getColorForCategory(category)}></div>
           <div className="heading3-5">{name}</div>

@@ -1,8 +1,9 @@
+// @ts-ignore
 import React, {useContext} from 'react'
 import './css/Dashboard.css'
 import Header from '../components/Header'
 import Euro from '../components/Euro'
-import { BudgetContext } from '../context'
+import { BudgetContext, BudgetContextType } from '../context';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -14,14 +15,22 @@ const Dashboard = () => {
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/";
   const GET_CATEGORIES_URL = "http://localhost:3000/category";
   const GET_BUDGET_TOTAL_SPEND = "http://localhost:3000/expense/sum/"
-
-  const [budget, setBudget] = useState();
-  const [expenses, setExpenses] = useState();
-  const [budgetMonthAndYear, setBudgetMonthAndYear] = useState();
-  const [budgetMonth, setBudgetMonth] = useState();
+  interface EditExpense {
+    _id: string;
+    name: string;
+    amount: string;
+    category: string;
+    date: string;
+    image: string;
+    // Add other properties as needed
+  }
+  const [budget, setBudget] = useState(null);
+  const [expenses, setExpenses] = useState< [string, any[]] | []>([]);
+  const [budgetMonthAndYear, setBudgetMonthAndYear] = useState("");
+  const [budgetMonth, setBudgetMonth] = useState("");
   const [addExpenseState, setAddExpenseState] = useState(false)
   const [categories, setCategories] = useState([])
-  const [editExpense, setEditExpense] = useState('')
+  const [editExpense, setEditExpense] = useState<EditExpense | "">("")
   const [budgetTotalSpend, setBudgetTotalSpend] = useState(0)
 
   const toggleAddExpenseState = () =>{
@@ -37,7 +46,7 @@ const Dashboard = () => {
 
   }, []);
 
-  const numberInMonth = (number) =>{
+  const numberInMonth = (number: number) =>{
     switch (number) {
       case 10:
         return "OCT"
@@ -104,10 +113,25 @@ const Dashboard = () => {
     }
   }
 
+  const contextValue: BudgetContextType = {
 
+    budgetMonth,
+    budgetMonthAndYear,
+    setBudgetMonth,
+    budget,
+    expenses,
+    budgetTotalSpend,
+    toggleAddExpenseState,
+      fetchExpenses,
+      fetchBudget,
+      categories,
+      editExpense,
+      setEditExpense,
+      fetchBudgetTotalSpendSum
+  };
+  // @ts-ignore
   return (
-    <BudgetContext.Provider value={{budgetMonth, budgetMonthAndYear, budget, expenses, budgetTotalSpend,
-      toggleAddExpenseState, fetchExpenses, fetchBudget, categories, editExpense, setEditExpense, fetchBudgetTotalSpendSum}}>
+    <BudgetContext.Provider value={contextValue}>
       <div>
         <div  onClick={dashboardClicked}>
           <Header />

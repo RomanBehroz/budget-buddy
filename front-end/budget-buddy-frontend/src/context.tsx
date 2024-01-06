@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import ExpenseListItem, { ExpenseListItemProps } from "./components/ExpenseListItem";
 interface EditExpense {
     _id: string;
     name: string;
@@ -9,25 +10,24 @@ interface EditExpense {
     // Add other properties as needed
 }
 
-type BudgetContextType = {
-    budgetMonthAndYear: string | null;
+export type BudgetContextType = {
+    budgetMonth: string,
+    budgetMonthAndYear: string,
+    setBudgetMonth:  (arg: string) => void,
     budget: { amount: number, _id:number } | null;
-    budgetId: string | null;
+    expenses:  [date: string, items: any[] ] | [];
     budgetTotalSpend: number;
-    expenses:  [date: string, items: any[] ];
-    budgetMonth: string | "";
     toggleAddExpenseState: () => void,
-    setEditExpense: (arg: any) => void,
     fetchExpenses: () => void,
+    fetchBudget: () => void,
     categories: any[],
     editExpense: EditExpense | '',
-    fetchBudget: () => void,
+    setEditExpense: (arg: any) => void,
     fetchBudgetTotalSpendSum: () => void,
-    setBudgetId: (arg: string) => void,
 };
 
 export const BudgetContext = createContext<BudgetContextType>({
-    budgetMonthAndYear: null,
+    budgetMonthAndYear: "",
     budget: null,
     budgetTotalSpend: 0,
     expenses: ['', []],
@@ -39,6 +39,5 @@ export const BudgetContext = createContext<BudgetContextType>({
     editExpense: '',
     fetchBudget: () => {},
     fetchBudgetTotalSpendSum: ()=> {},
-    budgetId: null,
-    setBudgetId: (arg: string)=> {},
+    setBudgetMonth: (arg: string)=> {},
 });

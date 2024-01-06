@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import ExpenseListItem from './ExpenseListItem';
+import ExpenseListItem, {ExpenseListItemProps} from './ExpenseListItem';
 import './css/ExpenseListGroup.css';
 import { BudgetContext } from '../context';
 
@@ -15,10 +15,10 @@ const ExpenseListGroup: React.FC = () => {
                             {date} {budgetMonth}
                         </div>
                     </div>
-                    {items.map((item: any) => (
+                    {items.map((item: ExpenseListItemProps) => (
                         <ExpenseListItem
                             key={item._id}
-                            id={item._id}
+                            _id={item._id}
                             name={item.name}
                             category={item.category}
                             amount={item.amount}
