@@ -12,6 +12,7 @@ import AddExpenseButton from "../components/AddExpenseButton";
 import AddExpenseForm from "../components/AddExpenseForm";
 import useExpenses from "../useExpenses";
 import {useNavigate} from "react-router-dom";
+import PopupWindow from "../components/PopupWindow";
 const Dashboard = () => {
   const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/";
@@ -151,20 +152,7 @@ const Dashboard = () => {
           {state === 'error' && <div style={{color:"white"}}>Error!  {error?.message}</div>}
           {state === 'error' ? (
               <>
-                <div className='delete-window'>
-                  <p style={{color: "red"}}>An error has occured!</p>
-                  <p style={{color: "red"}}>{error?.message}</p>
-                  <br/>
-                  <div className='buttons'>
-
-                    <button onClick={refresh} className='button'>
-                      REFRESH
-                    </button>
-                    <button onClick={() => {navigate('/')}} className='button'>
-                      EXIT
-                    </button>
-                  </div>
-                </div>
+               <PopupWindow msg={"An error has occured! " + error?.message} buttonATxt="REFRESH" buttonAFunc={refresh} buttonBTxt="EXIT" buttonBFunx={()=> {navigate('/')}}/>
               </>
           ) : (
               <></>
@@ -174,6 +162,7 @@ const Dashboard = () => {
         </div>
 
           {addExpenseState? <> <AddExpenseForm /></> : <>  <AddExpenseButton/></>}
+
       </div>
     </BudgetContext.Provider>
   )

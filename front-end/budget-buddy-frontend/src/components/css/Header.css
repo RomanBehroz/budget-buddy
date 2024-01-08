@@ -8,7 +8,7 @@
     left: 0;
     width: 100%;
     background-color: #232C33;
-    z-index: 999;
+    z-index: 1001;
 }
 
 .box{
@@ -27,6 +27,8 @@
     align-items: center;
     gap: 20px;
     cursor: pointer;
+    z-index: 1001;
+    position: relative;
 }
 .logo img{
     height: 50px;

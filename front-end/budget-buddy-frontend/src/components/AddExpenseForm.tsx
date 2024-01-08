@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './css/AddExpenseForm.css';
 import { BudgetContext } from '../context';
 import axios from 'axios';
+import PopupWindow from "./PopupWindow";
 
 const AddExpenseForm: React.FC = () => {
     const {
@@ -208,17 +209,18 @@ const AddExpenseForm: React.FC = () => {
 
             {deleteWindow ? (
                 <>
-                    <div className='delete-window'>
-                        <p>Are you sure, you want to delete this expense?</p>
-                        <div className='buttons'>
-                            <button onClick={() => deleteExpense(expenseId)} className='button red'>
-                                Yes
-                            </button>
-                            <button onClick={() => setDeleteWindow(false)} className='button'>
-                                No
-                            </button>
-                        </div>
-                    </div>
+                    <PopupWindow msg="Are you sure, you want to delete this expense?" buttonATxt="YES" buttonAFunc={() => deleteExpense(expenseId)} buttonBTxt="NO" buttonBFunx={() => setDeleteWindow(false)}/>
+                    {/*<div className='delete-window'>*/}
+                    {/*    <p>Are you sure, you want to delete this expense?</p>*/}
+                    {/*    <div className='buttons'>*/}
+                    {/*        <button onClick={() => deleteExpense(expenseId)} className='button red'>*/}
+                    {/*            Yes*/}
+                    {/*        </button>*/}
+                    {/*        <button onClick={() => setDeleteWindow(false)} className='button'>*/}
+                    {/*            No*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </>
             ) : (
                 <></>
