@@ -9,7 +9,7 @@ import axios from "axios";
 import {BudgetContext} from "../context";
 import Header from "../components/Header";
 
-const Setbudget = () => {
+const About = () => {
     let navigate = useNavigate()
     useEffect(() => {
 
@@ -54,14 +54,16 @@ const Setbudget = () => {
             <div className='setbudget-page'>
                 <div className='setbudget-content'>
                     <div className='setbudget-text'>
-                        Hello!
-                        <p>Please set your budget</p>
+
+                        <p>About</p>
+                        <br/>
+                        <div className='heading4'>This application is designed and developed by <br/>Roman Behroz</div>
                     </div>
 
                     <div className='setbudget-input'>
 
-                        <input type="number" pattern="[0-9]*" inputMode="numeric" required={true} placeholder='Enter budget amount in euros'/>
-                        <div onClick={() => createBudget()} className='setbudget-button'>NEXT</div>
+                        {/*<input type="number" pattern="[0-9]*" inputMode="numeric" required={true} placeholder='Enter budget amount in euros'/>*/}
+                        <div onClick={() => createBudget()} className='setbudget-button'>BACK</div>
                     </div>
                 </div>
             </div>
@@ -69,4 +71,4 @@ const Setbudget = () => {
     )
 }
 
-export default Setbudget
+export default About

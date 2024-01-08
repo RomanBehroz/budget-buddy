@@ -11,11 +11,14 @@ import MainContent from '../components/MainContent'
 import AddExpenseButton from "../components/AddExpenseButton";
 import AddExpenseForm from "../components/AddExpenseForm";
 import useExpenses from "../useExpenses";
+import {useNavigate} from "react-router-dom";
 const Dashboard = () => {
   const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/";
   const GET_CATEGORIES_URL = "http://localhost:3000/category";
   const GET_BUDGET_TOTAL_SPEND = "http://localhost:3000/expense/sum/"
+
+  let navigate = useNavigate()
   interface EditExpense {
     _id: string;
     name: string;
@@ -128,7 +131,7 @@ const Dashboard = () => {
     expenses:data,
     budgetTotalSpend,
     toggleAddExpenseState,
-      fetchExpenses,
+      fetchExpenses:refresh,
       fetchBudget,
       categories,
       editExpense,
@@ -142,9 +145,30 @@ const Dashboard = () => {
         <div  onClick={dashboardClicked}>
           <Header />
           {state === 'initial' && <div style={{color:"white"}}>initial</div>}
-          {state === 'loading' && <div style={{color:"white"}}>Loading...</div>}
+          {state === 'loading' &&      <div className='delete-window'>
+            <p>LOADING...</p>
+          </div>}
           {state === 'error' && <div style={{color:"white"}}>Error!  {error?.message}</div>}
+          {state === 'error' ? (
+              <>
+                <div className='delete-window'>
+                  <p style={{color: "red"}}>An error has occured!</p>
+                  <p style={{color: "red"}}>{error?.message}</p>
+                  <br/>
+                  <div className='buttons'>
 
+                    <button onClick={refresh} className='button'>
+                      REFRESH
+                    </button>
+                    <button onClick={() => {navigate('/')}} className='button'>
+                      EXIT
+                    </button>
+                  </div>
+                </div>
+              </>
+          ) : (
+              <></>
+          )}
           <Euro />
           <MainContent />
         </div>

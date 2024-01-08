@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import React from 'react';
 import Setbudget from "./pages/Setbudget";
+import NotFound from "./pages/NotFound";
+import About from "./pages/About";
 
 function App(): JSX.Element {
     return (
@@ -11,6 +13,8 @@ function App(): JSX.Element {
             <Routes>
                 <Route path="/" element={<Setbudget />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/about" element={<About />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );

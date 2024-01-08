@@ -9,7 +9,7 @@ import axios from "axios";
 import {BudgetContext} from "../context";
 import Header from "../components/Header";
 
-const Setbudget = () => {
+const NotFound = () => {
     let navigate = useNavigate()
     useEffect(() => {
 
@@ -54,13 +54,15 @@ const Setbudget = () => {
             <div className='setbudget-page'>
                 <div className='setbudget-content'>
                     <div className='setbudget-text'>
-                        Hello!
-                        <p>Please set your budget</p>
+
+                        <p>Error 404 Page not found!</p>
+                        <br/>
+                        <p> Click next to navigate to dashboard</p>
                     </div>
 
                     <div className='setbudget-input'>
 
-                        <input type="number" pattern="[0-9]*" inputMode="numeric" required={true} placeholder='Enter budget amount in euros'/>
+                        {/*<input type="number" pattern="[0-9]*" inputMode="numeric" required={true} placeholder='Enter budget amount in euros'/>*/}
                         <div onClick={() => createBudget()} className='setbudget-button'>NEXT</div>
                     </div>
                 </div>
@@ -69,4 +71,4 @@ const Setbudget = () => {
     )
 }
 
-export default Setbudget
+export default NotFound
