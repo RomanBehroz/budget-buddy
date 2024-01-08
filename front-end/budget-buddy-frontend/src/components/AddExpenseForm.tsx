@@ -209,7 +209,7 @@ const AddExpenseForm: React.FC = () => {
 
             {deleteWindow ? (
                 <>
-                    <PopupWindow msg="Are you sure, you want to delete this expense?" buttonATxt="YES" buttonAFunc={() => deleteExpense(expenseId)} buttonBTxt="NO" buttonBFunx={() => setDeleteWindow(false)}/>
+                    <PopupWindow msg="Are you sure, you want to delete this expense?" buttonATxt="NO" buttonAFunc={() => setDeleteWindow(false)} buttonBTxt="YES" buttonBFunx={ () => deleteExpense(expenseId)}/>
                     {/*<div className='delete-window'>*/}
                     {/*    <p>Are you sure, you want to delete this expense?</p>*/}
                     {/*    <div className='buttons'>*/}

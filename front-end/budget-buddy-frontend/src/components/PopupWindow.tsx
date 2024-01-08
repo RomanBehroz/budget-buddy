@@ -28,7 +28,7 @@ const PopupWindow: React.FC<PopupWindowProps> = ({
                     <button onClick={buttonAFunc} className="button">
                         {buttonATxt}
                     </button>
-                    <button onClick={buttonBFunx} className="button">
+                    <button onClick={buttonBFunx} className="button red">
                         {buttonBTxt}
                     </button>
                 </div>
