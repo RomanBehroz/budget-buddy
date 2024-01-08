@@ -10,6 +10,7 @@ import axios from 'axios';
 import MainContent from '../components/MainContent'
 import AddExpenseButton from "../components/AddExpenseButton";
 import AddExpenseForm from "../components/AddExpenseForm";
+import useExpenses from "../useExpenses";
 const Dashboard = () => {
   const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/";
@@ -24,6 +25,7 @@ const Dashboard = () => {
     image: string;
     // Add other properties as needed
   }
+
   const [budget, setBudget] = useState(null);
   const [expenses, setExpenses] = useState< [string, any[]] | []>([]);
   const [budgetMonthAndYear, setBudgetMonthAndYear] = useState("");
@@ -39,8 +41,8 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+
     fetchBudget();
-    fetchExpenses();
     fetchExpenseCategories()
     fetchBudgetTotalSpendSum()
 
@@ -101,6 +103,7 @@ const Dashboard = () => {
       const response = await axios.get(GET_EXPENSES_URL+"653124e6a443d6942a9f0d8f");
       if (response.status === 200) {
         setExpenses(response.data)
+        return response.data;
       }
     } catch (error) {
       console.error('Error:', error);
@@ -113,13 +116,16 @@ const Dashboard = () => {
     }
   }
 
+
+  const { data, state, error, refresh }  = useExpenses(GET_EXPENSES_URL+"653124e6a443d6942a9f0d8f")
+
   const contextValue: BudgetContextType = {
 
     budgetMonth,
     budgetMonthAndYear,
     setBudgetMonth,
     budget,
-    expenses,
+    expenses:data,
     budgetTotalSpend,
     toggleAddExpenseState,
       fetchExpenses,
@@ -129,12 +135,16 @@ const Dashboard = () => {
       setEditExpense,
       fetchBudgetTotalSpendSum
   };
-  // @ts-ignore
+
   return (
     <BudgetContext.Provider value={contextValue}>
       <div>
         <div  onClick={dashboardClicked}>
           <Header />
+          {state === 'initial' && <div style={{color:"white"}}>initial</div>}
+          {state === 'loading' && <div style={{color:"white"}}>Loading...</div>}
+          {state === 'error' && <div style={{color:"white"}}>Error!  {error?.message}</div>}
+
           <Euro />
           <MainContent />
         </div>
