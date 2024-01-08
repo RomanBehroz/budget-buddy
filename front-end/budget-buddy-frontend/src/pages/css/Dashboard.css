@@ -1,0 +1,16 @@
+.footer{
+    height: 5px;
+    background-color: red;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #232C33;
+    z-index: 4;
+    font-size: 10px;
+    color: white;
+}

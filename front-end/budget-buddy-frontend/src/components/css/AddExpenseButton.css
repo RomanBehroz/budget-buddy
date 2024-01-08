@@ -1,6 +1,6 @@
 .add-expense-button-section{
     position: fixed;   /* Fixed positioning to stay at the bottom */
-    bottom: 20px;
+    bottom: 25px;
     left: 50%;         /* Center horizontally */
     transform: translateX(-50%); /* Center horizontally precisely */
     width: 80px;      /* Width of 100px */

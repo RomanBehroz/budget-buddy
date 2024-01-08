@@ -159,6 +159,7 @@ const Dashboard = () => {
           )}
           <Euro />
           <MainContent />
+          <div className='footer'>This application is developed and designed by Roman Behroz</div>
         </div>
 
           {addExpenseState? <> <AddExpenseForm /></> : <>  <AddExpenseButton/></>}
