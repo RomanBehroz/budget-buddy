@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import {UserProvider, useUser} from "./userContext";
+import Profile from "./pages/Profile";
 
 function App(): JSX.Element {
 
@@ -16,7 +17,8 @@ function App(): JSX.Element {
         <UserProvider>
             <Routes>
 
-                <Route path="/" element={<Setbudget />} />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/about" element={<About />} />
@@ -24,6 +26,7 @@ function App(): JSX.Element {
 
             </Routes>
         </UserProvider>
+            <div className='footer'>This application is developed and designed by Roman Behroz</div>
         </>
 
     );

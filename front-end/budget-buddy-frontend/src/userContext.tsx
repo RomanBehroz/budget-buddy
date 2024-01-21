@@ -3,7 +3,6 @@ import React, {createContext, ReactNode, useContext} from 'react';
 
 export interface User {
     username: string;
-    // Add other user properties as needed
 }
 
 interface UserContextType {
