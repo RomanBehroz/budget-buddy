@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Expense = require('./models/expenseModel');
 const Category = require('./models/categoryModel');
 const Budget = require('./models/budgetModel');
+const User = require('./models/userModel');
 const app = express();
 const multer = require('multer');
 const path = require('path')
@@ -333,6 +334,53 @@ app.get('/expense/budget/:id', async(req, res) =>{
         res.status(500).json({message: error.message});
     }
 })
+
+
+
+
+app.post('/login', async(req, res) =>{
+    const { username, password } = req.body;
+
+    try {
+        // Find a user by username and password
+        const user = await User.findOne({ username, password });
+
+        if (user) {
+            // Successful login
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            // Incorrect credentials
+            res.status(401).json({ message: 'Unauthorized' });
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
+const saveUser = async (username, password)=> {
+    try {
+        const user = new User({ username, password });
+        await User.create(user)
+        console.log('User saved successfully');
+    } catch (error) {
+        console.error('Error saving user:', error);
+        throw error;
+    }
+};
+
+app.post('/register', async(req, res) =>{
+    const { username, password } = req.body;
+
+    try {
+        // Save the user into the database
+        await saveUser(username, password);
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 //we first connect to the database. Then run our application.
 

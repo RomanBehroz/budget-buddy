@@ -8,11 +8,19 @@ import { useEffect } from 'react';
 import axios from "axios";
 import {BudgetContext} from "../context";
 import Header from "../components/Header";
+import {useUser} from "../userContext";
 
 const About = () => {
     let navigate = useNavigate()
-    useEffect(() => {
+    const { loginUser } = useUser();
 
+    useEffect(() => {
+        let loggedUser = sessionStorage.getItem('user')
+        if(loggedUser != undefined || loggedUser != null){
+            // Perform login logic, fetch user data, etc.
+            const loggedInUser = { username: loggedUser};
+            loginUser(loggedInUser);
+        }
 
     }, []);
     // function getCurrentMonth() {

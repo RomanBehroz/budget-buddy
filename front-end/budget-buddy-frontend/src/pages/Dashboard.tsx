@@ -13,7 +13,18 @@ import AddExpenseForm from "../components/AddExpenseForm";
 import useExpenses from "../useExpenses";
 import {useNavigate} from "react-router-dom";
 import PopupWindow from "../components/PopupWindow";
+import {useUser} from "../userContext";
 const Dashboard = () => {
+  const { loginUser, user } = useUser();
+  useEffect(() => {
+    let loggedUser = sessionStorage.getItem('user')
+    if(loggedUser != undefined || loggedUser != null){
+      // Perform login logic, fetch user data, etc.
+      const loggedInUser = { username: loggedUser};
+      loginUser(loggedInUser);
+    }
+
+  }, []);
   const GET_BUDGET_URL = "http://localhost:3000/budget/653124e6a443d6942a9f0d8f";
   const GET_EXPENSES_URL = "http://localhost:3000/expense/budget/";
   const GET_CATEGORIES_URL = "http://localhost:3000/category";
@@ -161,8 +172,8 @@ const Dashboard = () => {
           <MainContent />
           <div className='footer'>This application is developed and designed by Roman Behroz</div>
         </div>
+        {user? <> {addExpenseState? <> <AddExpenseForm /></> : <>  <AddExpenseButton/></>}</>:<></>}
 
-          {addExpenseState? <> <AddExpenseForm /></> : <>  <AddExpenseButton/></>}
 
       </div>
     </BudgetContext.Provider>
